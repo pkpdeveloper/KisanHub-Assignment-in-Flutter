@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kisan_hub/config/app_config.dart';
-import 'package:kisan_hub/home/home_widget.dart';
+import 'package:kisan_hub/login/login_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppConfig.primarySwatch,
       ),
-      home: HomeWidget(),
+      home: LoginWidget(),
     );
   }
 }

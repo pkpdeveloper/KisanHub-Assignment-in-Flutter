@@ -6,4 +6,6 @@ class AppConfig {
   static get homeScreenTitle => 'Home';
 
   static get primarySwatch => Colors.green;
+
+  static String get loginScreenTitle => 'Login';
 }
