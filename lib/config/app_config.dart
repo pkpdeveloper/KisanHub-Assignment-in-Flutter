@@ -8,4 +8,6 @@ class AppConfig {
   static get primarySwatch => Colors.green;
 
   static String get loginScreenTitle => 'Login';
+
+  static String userAuthToken;
 }

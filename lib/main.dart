@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kisan_hub/bloc/home_screen_bloc.dart';
-import 'package:kisan_hub/bloc/user_login_bloc.dart';
 import 'package:kisan_hub/config/app_config.dart';
-import 'package:kisan_hub/home/home_widget.dart';
-import 'package:kisan_hub/login/login_widget.dart';
-import 'package:kisan_hub/provider/bloc_provider.dart';
+import 'package:kisan_hub/widget/custom_navigation.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,10 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppConfig.primarySwatch,
       ),
-      home: BlocProvider(
-        bloc: HomeScreenBloc(),
-        child: HomeWidget(),
-      ),
+      home: CustomNavigationWidget(),
     );
   }
 }

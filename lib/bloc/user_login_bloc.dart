@@ -6,7 +6,7 @@ import 'package:kisan_hub/provider/bloc_provider.dart';
 
 class UserLoginBloc extends BlocBase implements _UserLoginBlocContract {
   // Streams to handle the user
-  final _loginStatusController = StreamController<LoginStatus>();
+  final _loginStatusController = StreamController<LoginStatus>.broadcast();
 
   Stream<LoginStatus> get loginStream => _loginStatusController.stream;
 

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kisan_hub/bloc/user_login_bloc.dart';
 import 'package:kisan_hub/config/app_config.dart';
+import 'package:kisan_hub/config/app_routes.dart';
 import 'package:kisan_hub/model/login_status.dart';
 import 'package:kisan_hub/model/status.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
+import 'package:kisan_hub/widget/custom_navigation.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -120,9 +122,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                   snapshot.data.status == Status.completed &&
                   snapshot.data.userToken != null) {
                 _isLoading = false;
-                Future.delayed(Duration(milliseconds: 200), () {
-                  _showSnackBar(context, "Login successful!");
-                });
+                AppConfig.userAuthToken = snapshot.data.userToken;
+                CustomNavigationWidget.of(context).route(AppRoutes.main);
               }
               return ModalProgressHUD(
                 inAsyncCall: _isLoading,
