@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kisan_hub/bloc/user_login_bloc.dart';
 import 'package:kisan_hub/config/app_config.dart';
 import 'package:kisan_hub/login/login_widget.dart';
+import 'package:kisan_hub/provider/bloc_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +15,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AppConfig.primarySwatch,
       ),
-      home: LoginWidget(),
+      home: BlocProvider(
+        bloc: UserLoginBloc(),
+        child: LoginWidget(),
+      ),
     );
   }
 }
