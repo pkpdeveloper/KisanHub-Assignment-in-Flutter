@@ -33,6 +33,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     final UserLoginBloc userLoginBloc = BlocProvider.of<UserLoginBloc>(context);
 
     final _userNameWidget = TextFormField(
+      key: Key('username'),
       controller: _usernameController,
       decoration: const InputDecoration(
         icon: Icon(Icons.person),
@@ -48,6 +49,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
 
     final _passwordWidget = TextFormField(
+      key: Key('password'),
       controller: _passwordController,
       decoration: const InputDecoration(
         icon: Icon(Icons.vpn_key),
@@ -63,6 +65,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
 
     final _loginCardWidget = Card(
+      key: Key('login_form'),
       elevation: 5,
       margin: const EdgeInsets.all(15.0),
       shape: RoundedRectangleBorder(

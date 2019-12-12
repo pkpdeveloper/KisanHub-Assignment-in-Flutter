@@ -8,7 +8,8 @@ import 'package:kisan_hub/home/home_widget.dart';
 import 'package:kisan_hub/login/login_widget.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
 
-class CustomNavigationWidget extends StatefulWidget {
+class CustomNavigationWidget extends StatefulWidget
+    implements CustomNavigationContract {
   final streamController = StreamController<String>.broadcast();
 
   @override
@@ -20,6 +21,7 @@ class CustomNavigationWidget extends StatefulWidget {
     return context.ancestorWidgetOfExactType(CustomNavigationWidget);
   }
 
+  @override
   void route(String route) {
     streamController.add(route);
   }
@@ -43,4 +45,8 @@ class _CustomNavigationWidgetState extends State<CustomNavigationWidget> {
 
     return AppConfig.userAuthToken != null ? _homeWidget : _loginWidget;
   }
+}
+
+abstract class CustomNavigationContract {
+  void route(String route);
 }

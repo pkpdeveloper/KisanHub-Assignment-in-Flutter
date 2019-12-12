@@ -10,8 +10,12 @@ class RestApi implements _RestApiContract {
     var url = baseUrl + '/login';
     var response = await http
         .post(url, body: {'username': username, 'password': password});
-    Map<String, dynamic> resMap = json.decode(response.body);
-    return resMap.isNotEmpty ? resMap['userToken'] : null;
+    try {
+      Map<String, dynamic> resMap = json.decode(response.body);
+      return resMap.isNotEmpty ? resMap['userToken'] : null;
+    } on FormatException catch (e) {
+      return null;
+    }
   }
 
   @override
