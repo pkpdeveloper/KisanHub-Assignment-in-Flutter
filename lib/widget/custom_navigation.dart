@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:kisan_hub/bloc/home_screen_bloc.dart';
-import 'package:kisan_hub/bloc/user_login_bloc.dart';
-import 'package:kisan_hub/config/app_config.dart';
-import 'package:kisan_hub/home/home_widget.dart';
-import 'package:kisan_hub/login/login_widget.dart';
-import 'package:kisan_hub/provider/bloc_provider.dart';
+import 'package:flutter/material.dart';
 
 class CustomNavigationWidget extends StatefulWidget
     implements CustomNavigationContract {
-  final streamController = StreamController<String>.broadcast();
+  final Widget child;
+  final StreamController<Widget> streamController;
+
+  const CustomNavigationWidget(
+      {Key key, @required this.streamController, this.child})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -18,35 +17,44 @@ class CustomNavigationWidget extends StatefulWidget
   }
 
   static CustomNavigationWidget of(BuildContext context) {
-    return context.ancestorWidgetOfExactType(CustomNavigationWidget);
+    var widget = context.ancestorWidgetOfExactType(CustomNavigationWidget);
+    if (widget == null) {
+      throw NullThrownError();
+    }
+    return widget;
   }
 
   @override
-  void route(String route) {
-    streamController.add(route);
+  void route(Widget widget) {
+    streamController.add(widget);
   }
 }
 
 class _CustomNavigationWidgetState extends State<CustomNavigationWidget> {
+  var _currentWidget;
+
+  @override
+  void initState() {
+    _currentWidget = widget.child;
+    widget.streamController.stream.listen((newWidget) {
+       Future.delayed(Duration(milliseconds: 50), () {
+        if (mounted) {
+          setState(() {
+            print("widget refreshed");
+            _currentWidget = newWidget;
+          });
+        }
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    widget.streamController.stream.listen((onData) {
-      if (mounted) {
-        setState(() {
-          print("widget refreshed");
-        });
-      }
-    });
-    final _homeWidget =
-        BlocProvider(bloc: HomeScreenBloc(), child: HomeWidget());
-
-    final _loginWidget =
-        BlocProvider(bloc: UserLoginBloc(), child: LoginWidget());
-
-    return AppConfig.userAuthToken != null ? _homeWidget : _loginWidget;
+    return _currentWidget;
   }
 }
 
 abstract class CustomNavigationContract {
-  void route(String route);
+  void route(Widget widget);
 }

@@ -126,7 +126,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   snapshot.data.userToken != null) {
                 _isLoading = false;
                 AppConfig.userAuthToken = snapshot.data.userToken;
-                CustomNavigationWidget.of(context).route(AppRoutes.main);
+                CustomNavigationWidget.of(context).route(AppRoutes.homeWidget);
               }
               return ModalProgressHUD(
                 inAsyncCall: _isLoading,

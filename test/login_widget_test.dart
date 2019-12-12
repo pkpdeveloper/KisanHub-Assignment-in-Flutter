@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kisan_hub/bloc/user_login_bloc.dart';
@@ -10,13 +12,13 @@ void main() {
   // Define the test key.
   final testKey = Key('K');
 
-  // Login Widget
-  final childLoginWidget = LoginWidget();
-
-  final mainLoginWidget =
-      BlocProvider(bloc: UserLoginBloc(), child: childLoginWidget);
-
   testWidgets('LoginWidget test', (WidgetTester tester) async {
+    // Login Widget
+    final childLoginWidget = LoginWidget();
+
+    final mainLoginWidget =
+        BlocProvider(bloc: UserLoginBloc(), child: childLoginWidget);
+
     await tester.pumpWidget(MaterialApp(
       key: testKey,
       home: mainLoginWidget,
@@ -43,9 +45,18 @@ void main() {
   });
 
   testWidgets('LoginWidget form submit test', (WidgetTester tester) async {
-    // Mock class
+    // Login Widget
+    final childLoginWidget = LoginWidget();
 
-    final customNavigationWidget = CustomNavigationWidget();
+    final mainLoginWidget =
+        BlocProvider(bloc: UserLoginBloc(), child: childLoginWidget);
+
+    final streamController = StreamController<Widget>.broadcast();
+
+    final customNavigationWidget = CustomNavigationWidget(
+      child: mainLoginWidget,
+      streamController: streamController,
+    );
 
     await tester.pumpWidget(MaterialApp(
       home: customNavigationWidget,
