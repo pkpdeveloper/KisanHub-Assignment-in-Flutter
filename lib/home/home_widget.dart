@@ -44,6 +44,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 }
               },
               child: ModalProgressHUD(
+                  key: Key('loading_view'),
                   inAsyncCall: _isLoading,
                   child: snapshot.data != null &&
                           snapshot.data.activities != null

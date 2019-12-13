@@ -73,5 +73,7 @@ void main() {
 
     // Rebuild the widget with the new item.
     await tester.pump();
+
+    streamController.close();
   });
 }

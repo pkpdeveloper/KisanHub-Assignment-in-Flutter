@@ -33,6 +33,8 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 100), () {});
       await tester.pump();
       expect(find.byKey(Key('test_widget')), findsOneWidget);
+
+      streamController.close();
     });
   });
 }
