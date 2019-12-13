@@ -5,12 +5,12 @@ import 'package:kisan_hub/model/get_activity_status.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
 
 class HomeScreenBloc extends BlocBase implements _HomeScreenBlocContract {
-  final _activityStatusController =
-      StreamController<ActivityStatus>.broadcast();
+  final StreamController<ActivityStatus> _activityStatusController;
+  final RestApi _api;
+
+  HomeScreenBloc(this._activityStatusController, this._api);
 
   Stream<ActivityStatus> get activityStream => _activityStatusController.stream;
-
-  final _api = RestApi();
 
   @override
   void dispose() {
