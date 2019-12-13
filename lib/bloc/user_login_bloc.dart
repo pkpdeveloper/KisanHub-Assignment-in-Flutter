@@ -1,16 +1,19 @@
 import 'dart:async';
-
 import 'package:kisan_hub/api/rest_api.dart';
 import 'package:kisan_hub/model/login_status.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
 
 class UserLoginBloc extends BlocBase implements _UserLoginBlocContract {
   // Streams to handle the user
-  final _loginStatusController = StreamController<LoginStatus>.broadcast();
+  final StreamController<LoginStatus> _loginStatusController;
+  final RestApi _api;
+
+  UserLoginBloc(
+    this._loginStatusController,
+    this._api,
+  );
 
   Stream<LoginStatus> get loginStream => _loginStatusController.stream;
-
-  final _api = RestApi();
 
   @override
   void dispose() {

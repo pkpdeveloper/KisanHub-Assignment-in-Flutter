@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kisan_hub/api/rest_api.dart';
 import 'package:kisan_hub/bloc/user_login_bloc.dart';
 import 'package:kisan_hub/config/app_config.dart';
 import 'package:kisan_hub/login/login_widget.dart';
+import 'package:kisan_hub/model/login_status.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
 import 'package:kisan_hub/widget/custom_navigation.dart';
 
@@ -16,8 +18,10 @@ void main() {
     // Login Widget
     final childLoginWidget = LoginWidget();
 
-    final mainLoginWidget =
-        BlocProvider(bloc: UserLoginBloc(), child: childLoginWidget);
+    final mainLoginWidget = BlocProvider(
+        bloc:
+            UserLoginBloc(StreamController<LoginStatus>.broadcast(), RestApi()),
+        child: childLoginWidget);
 
     await tester.pumpWidget(MaterialApp(
       key: testKey,
@@ -48,8 +52,10 @@ void main() {
     // Login Widget
     final childLoginWidget = LoginWidget();
 
-    final mainLoginWidget =
-        BlocProvider(bloc: UserLoginBloc(), child: childLoginWidget);
+    final mainLoginWidget = BlocProvider(
+        bloc:
+            UserLoginBloc(StreamController<LoginStatus>.broadcast(), RestApi()),
+        child: childLoginWidget);
 
     final streamController = StreamController<Widget>.broadcast();
 
