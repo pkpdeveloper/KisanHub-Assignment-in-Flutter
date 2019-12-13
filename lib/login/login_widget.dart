@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kisan_hub/bloc/user_login_bloc.dart';
 import 'package:kisan_hub/config/app_config.dart';
 import 'package:kisan_hub/config/app_routes.dart';
@@ -74,37 +75,46 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
       child: Container(
         padding: const EdgeInsets.all(10.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _userNameWidget,
-              _passwordWidget,
-              Container(
-                  margin: const EdgeInsets.only(top: 10.0),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      highlightElevation: 2,
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          // Process data.
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          userLoginBloc.login(_usernameController.text,
-                              _passwordController.text);
-                        }
-                      },
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    ),
-                  ))
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            SvgPicture.network(
+                'https://static.kisanhub.com/corporate/landing/img/kisanhub_logo.svg',
+                placeholderBuilder: (BuildContext context) => Container(
+                    padding: const EdgeInsets.all(5.0),
+                    child: const CircularProgressIndicator())),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _userNameWidget,
+                  _passwordWidget,
+                  Container(
+                      margin: const EdgeInsets.only(top: 10.0),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          highlightElevation: 2,
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              // Process data.
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              userLoginBloc.login(_usernameController.text,
+                                  _passwordController.text);
+                            }
+                          },
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        ),
+                      ))
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

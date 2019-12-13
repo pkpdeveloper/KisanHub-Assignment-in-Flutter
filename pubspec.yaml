@@ -28,6 +28,7 @@ dependencies:
   rxdart: 0.22.6
   flutter_widgets: 0.1.7+1
   mockito: 4.1.1
+  flutter_svg: 0.15.0
 
 dev_dependencies:
   flutter_test:
