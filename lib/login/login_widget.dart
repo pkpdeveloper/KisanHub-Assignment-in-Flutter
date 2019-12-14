@@ -7,6 +7,7 @@ import 'package:kisan_hub/config/app_routes.dart';
 import 'package:kisan_hub/model/login_status.dart';
 import 'package:kisan_hub/model/status.dart';
 import 'package:kisan_hub/provider/bloc_provider.dart';
+import 'package:kisan_hub/widget/custom_carousel_widget.dart';
 import 'package:kisan_hub/widget/custom_navigation.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -68,7 +69,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     final _loginCardWidget = Card(
       key: Key('login_form'),
       elevation: 5,
-      margin: const EdgeInsets.all(15.0),
+      margin: const EdgeInsets.only(top: 40, left: 15, right: 15, bottom: 20),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: AppConfig.primarySwatch, width: 1),
         borderRadius: BorderRadius.circular(10),
@@ -88,7 +89,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _userNameWidget,
+                  SizedBox(height: 10),
                   _passwordWidget,
+                  SizedBox(height: 10),
                   Container(
                       margin: const EdgeInsets.only(top: 10.0),
                       child: Align(
@@ -110,7 +113,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                             style: TextStyle(fontSize: 20.0),
                           ),
                         ),
-                      ))
+                      )),
+                  SizedBox(height: 10),
                 ],
               ),
             )
@@ -119,10 +123,20 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
     );
 
+    final _carousalWidgets = <Widget>[
+      buildImageWidget(
+          'https://images.pexels.com/photos/1112080/pexels-photo-1112080.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),
+      buildImageWidget(
+          'https://images.pexels.com/photos/2284170/pexels-photo-2284170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),
+      buildImageWidget(
+          'https://images.pexels.com/photos/2255801/pexels-photo-2255801.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
+    ];
+
     return Scaffold(
         appBar: AppBar(
           title: Text(AppConfig.loginScreenTitle),
         ),
+        backgroundColor: Colors.grey,
         body: Builder(
           builder: (context) => StreamBuilder<LoginStatus>(
             stream: userLoginBloc.loginStream,
@@ -139,19 +153,26 @@ class _LoginWidgetState extends State<LoginWidget> {
                 CustomNavigationWidget.of(context).route(AppRoutes.homeWidget);
               }
               return ModalProgressHUD(
-                inAsyncCall: _isLoading,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[_loginCardWidget],
-                ),
-              );
+                  inAsyncCall: _isLoading,
+                  child: Stack(children: <Widget>[
+                    CustomCarouselWidget(
+                        children: _carousalWidgets,
+                        duration: const Duration(seconds: 30)),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[_loginCardWidget],
+                    )
+                  ]));
             },
           ),
         ));
   }
 
-  void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
+  Widget buildImageWidget(String imageUrl) {
+    return Image.network(imageUrl,
+        fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center);
   }
 }
